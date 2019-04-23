@@ -1,6 +1,9 @@
 const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+
+mongoose.connect('mongodb://localhost/UsersAPIAuthN')
 // const status = require('http-status')
 // const path = require('path')
 
@@ -14,7 +17,7 @@ app.use(bodyParser.json())
 // const personRoute = require('./routes/person')
 // const customerRoute = require('./routes/customer')
 
-app.use('/users', require('./routes/users'))
+app.use('/user', require('./routes/user'))
 // app.use(personRoute)
 // app.use(customerRoute)
 // app.use(express.static('public'))

@@ -5,15 +5,15 @@ const {
   validateBody,
   schemas
 } = require('../helpers/routeHelpers')
-const UsersModel = require('../controllers/users.controller')
+const UserController = require('../controllers/user.controller')
 
 router.route('/signup')
-  .post(validateBody(schemas.authSchema), UsersModel.signUp)
+  .post(validateBody(schemas.authSchema), UserController.signUp)
 
 router.route('/signin')
-  .post(UsersModel.signIn)
+  .post(UserController.signIn)
 
 router.route('/secret')
-  .get(UsersModel.secret)
+  .get(UserController.secret)
 
 module.exports = router
