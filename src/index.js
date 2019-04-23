@@ -1,29 +1,40 @@
 const express = require('express')
-const app = express()
-const status = require('http-status')
-const path = require('path')
+const morgan = require('morgan')
 const bodyParser = require('body-parser')
-const personRoute = require('./routes/person')
-const customerRoute = require('./routes/customer')
-const { port } = require('../config')
+// const status = require('http-status')
+// const path = require('path')
 
+const app = express()
+
+// Middlewares
+app.use(morgan('dev'))
 app.use(bodyParser.json())
-app.use(personRoute)
-app.use(customerRoute)
-app.use(express.static('public'))
 
-// Handler for 404 - Resource Not Found
-app.use((req, res, next) => {
-  console.info(status[404])
+// Routes
+// const personRoute = require('./routes/person')
+// const customerRoute = require('./routes/customer')
 
-  res.status(404).send('We think you are lost!')
-})
+app.use('/users', require('./routes/users'))
+// app.use(personRoute)
+// app.use(customerRoute)
+// app.use(express.static('public'))
 
-// Handler for Error 500
-app.use((err, req, res, next) => {
-  console.error(err.stack)
+// // Handler for 404 - Resource Not Found
+// app.use((req, res, next) => {
+//   console.info(status[404])
 
-  res.sendFile(path.join(__dirname, '../public/500.html'))
-})
+//   res.status(404).send('We think you are lost!')
+// })
 
+// // Handler for Error 500
+// app.use((err, req, res, next) => {
+//   console.error(err.stack)
+
+//   res.sendFile(path.join(__dirname, '../public/500.html'))
+// })
+
+// Start the server
+const {
+  port
+} = require('../config')
 app.listen(port, () => console.info(`Server has started on ${port}`))
