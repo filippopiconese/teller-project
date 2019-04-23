@@ -4,5 +4,6 @@ dotenv.config()
 module.exports = {
   localUri: process.env.MONGO_LOCAL_URI,
   atlasUri: process.env.MONGO_ATLAS_URI,
+  userUri: process.env.MONGO_USER_URI,
   port: process.env.PORT || 3000
 }

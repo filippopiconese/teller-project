@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+const { userUri } = require('../../config')
+
+mongoose.connect(userUri, { useNewUrlParser: true })
 // Create a schema
 const userSchema = new Schema({
   email: {
