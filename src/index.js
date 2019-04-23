@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 
 mongoose.connect('mongodb://localhost/UsersAPIAuthN')
-// const status = require('http-status')
+
 // const path = require('path')
 
 const app = express()
@@ -37,7 +37,5 @@ app.use('/user', require('./routes/user'))
 // })
 
 // Start the server
-const {
-  port
-} = require('../config')
+const { port } = require('../config')
 app.listen(port, () => console.info(`Server has started on ${port}`))

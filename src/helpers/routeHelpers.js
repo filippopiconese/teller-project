@@ -1,3 +1,4 @@
+const status = require('http-status')
 const Joi = require('joi')
 
 module.exports = {
@@ -6,6 +7,7 @@ module.exports = {
       const result = Joi.validate(req.body, schema)
 
       if (result.error) {
+        console.info(status[400])
         return res.status(400).json(result.error)
       }
 

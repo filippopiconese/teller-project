@@ -1,25 +1,24 @@
+const status = require('http-status')
 const User = require('../models/user.model')
 
 module.exports = {
   signUp: async (req, res, next) => {
-    console.log('Contents of req.value.body', req.value.body)
-    console.log('UserController.signUp() called!')
+    const { email, password } = req.value.body
 
-    const {
-      email,
-      password
-    } = req.value.body
+    // Check if there is a user with the same email
+    const foundUser = await User.findOne({ email })
+    if (foundUser) {
+      console.info(status[403])
+      return res.status(403).json({ error: 'Email is already in use' })
+    }
 
-    const newUser = new User({
-      email,
-      password
-    })
+    // Create a new user
+    const newUser = new User({ email, password })
 
     await newUser.save()
 
-    res.json({
-      user: 'created'
-    })
+    // Respond with token - TBD
+    res.json({ user: 'created' })
   },
   signIn: async (req, res, next) => {
     // Generate token
