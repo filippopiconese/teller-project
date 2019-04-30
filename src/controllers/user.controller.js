@@ -1,5 +1,16 @@
 const status = require('http-status')
+const JWT = require('jsonwebtoken')
 const User = require('../models/user.model')
+const { jwt_secret } = require('../../config')
+
+signToken = user => {
+  return JWT.sign({
+    iss: 'TellerApp',
+    sub: user.id,
+    iat: new Date().getTime(), // current time
+    exp: new Date().setDate(new Date().getDate() + 1) // current time + 1 day ahead
+  }, jwt_secret)
+}
 
 module.exports = {
   signUp: async (req, res, next) => {
@@ -14,16 +25,21 @@ module.exports = {
 
     // Create a new user
     const newUser = new User({ email, password })
-
     await newUser.save()
 
-    // Respond with token - TBD
-    res.json({ user: 'created' })
+    // Generate new token
+    const token = signToken(newUser)
+
+    // Respond with token
+    res.status(200).json({ token })
+
   },
+
   signIn: async (req, res, next) => {
     // Generate token
     console.log('UserController.signIn() called!')
   },
+
   secret: async (req, res, next) => {
     console.log('UserController.secret() called!')
   }

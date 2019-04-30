@@ -4,6 +4,10 @@ const Schema = mongoose.Schema
 const { userUri } = require('../../config')
 
 mongoose.connect(userUri, { useNewUrlParser: true })
+  .catch((error) => {
+    console.error(error + '\nCheck whether service mongod has started correctly - sudo service mongod start')
+  })
+
 // Create a schema
 const userSchema = new Schema({
   email: {
