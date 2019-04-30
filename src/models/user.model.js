@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
 const Schema = mongoose.Schema
 
 const { userUri } = require('../../config')
@@ -19,6 +20,22 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true
+  }
+})
+
+// We want to salt&hash the password before the save action takes place
+userSchema.pre('save', async function (next) {
+  try {
+    // Generate a salt
+    const salt = await bcrypt.genSalt(10)
+    // Generate a password has (salt + hash)
+    const passwordHash = await bcrypt.hash(this.password, salt)
+    // Re-assign hashed version over original, plaintext passord
+    this.password = passwordHash
+
+    next()
+  } catch (error) {
+    next(error)
   }
 })
 

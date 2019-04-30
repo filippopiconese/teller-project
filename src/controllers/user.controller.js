@@ -36,7 +36,7 @@ module.exports = {
   },
 
   signIn: async (req, res, next) => {
-    // Generate token
+    // Generate token 15:00
     console.log('UserController.signIn() called!')
   },
 
