@@ -28,7 +28,7 @@ if (!process.env.NODE_ENV == 'test') {
 app.use(bodyParser.json())
 
 // Routes
-app.use('/user', require('./routes/user'))
+app.use('/user', require('./routes/users'))
 
 // Handler for 404 - Resource Not Found
 app.use((req, res, next) => {
