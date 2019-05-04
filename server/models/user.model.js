@@ -2,12 +2,12 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const Schema = mongoose.Schema
 
-const { userUri } = require('../../config')
+// const { userUri } = require('../../config')
 
-mongoose.connect(userUri, { useNewUrlParser: true })
-  .catch((error) => {
-    console.error(error + '\nCheck whether service mongod has started correctly - sudo service mongod start')
-  })
+// mongoose.connect(userUri, { useNewUrlParser: true })
+//   .catch((error) => {
+//     console.error(error + '\nCheck whether service mongod has started correctly - sudo service mongod start')
+//   })
 
 // Create a schema
 const userSchema = new Schema({
@@ -46,6 +46,7 @@ userSchema.methods.isValidPassword = async function (newPassword) {
     throw new Error(error)
   }
 }
+
 // Create a model
 const User = mongoose.model('user', userSchema)
 
