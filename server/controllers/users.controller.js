@@ -1,6 +1,6 @@
 const status = require('http-status')
 const JWT = require('jsonwebtoken')
-const User = require('../models/users.model')
+const User = require('../models/user.model')
 const { jwt_secret } = require('../../config')
 
 signToken = user => {
@@ -32,7 +32,6 @@ module.exports = {
 
     // Respond with token
     res.status(200).json({ token })
-
   },
 
   signIn: async (req, res, next) => {
