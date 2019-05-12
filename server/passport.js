@@ -41,8 +41,11 @@ passport.use('googleToken', new GooglePlusTokenStrategy({
     // Check whether this current user exists in our DB
     const existingUser = await User.findOne({ "google.id": profile.id })
     if (existingUser) {
+      console.log('User already exists in our DB')
       return done(null, existingUser)
     }
+
+    console.log('User does not exists, we are creating a new one')
 
     // If new account
     const newUser = new User({
@@ -66,7 +69,7 @@ passport.use(new LocalStrategy({
 }, async (email, password, done) => {
   try {
     // Find the user given the email
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ "local.email": email })
 
     // If not, handle it
     if (!user) {

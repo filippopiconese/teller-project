@@ -6,6 +6,7 @@ const passportConf = require('../passport')
 const { validateBody, schemas } = require('../helpers/routeHelpers')
 const UserController = require('../controllers/users.controller')
 const passportSignIn = passport.authenticate('local', { session: false })
+const passportGoogle = passport.authenticate('googleToken', { session: false })
 const passportJWT = passport.authenticate('jwt', { session: false })
 
 router.route('/signup')
@@ -15,7 +16,7 @@ router.route('/signin')
   .post(validateBody(schemas.authSchema), passportSignIn, UserController.signIn)
 
 router.route('/oauth/google')
-  .post(passport.authenticate('googleToken', { session: false }))
+  .post(passportGoogle, UserController.googleOAuth)
 
 router.route('/secret')
   .get(passportJWT, UserController.secret)

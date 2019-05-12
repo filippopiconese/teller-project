@@ -2,7 +2,7 @@ const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-const { testUri, localUri } = require('../config')
+const { testUri, userUri } = require('../config')
 
 mongoose.Promise = global.Promise
 if (process.env.NODE_ENV == 'test') {
@@ -11,7 +11,7 @@ if (process.env.NODE_ENV == 'test') {
       console.error(error + '\nCheck whether service mongod has started correctly - sudo service mongod start')
     })
 } else {
-  mongoose.connect(localUri, { useNewUrlParser: true })
+  mongoose.connect(userUri, { useNewUrlParser: true })
     .catch((error) => {
       console.error(error + '\nCheck whether service mongod has started correctly - sudo service mongod start')
     })
