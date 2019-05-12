@@ -4,27 +4,53 @@ const Schema = mongoose.Schema
 
 // Create a schema
 const userSchema = new Schema({
-  email: {
+  method: {
     type: String,
-    required: true,
-    unique: true,
-    lowercase: true
-  },
-  password: {
-    type: String,
+    enum: ['local', 'google', 'facebook'],
     required: true
+  },
+  local: {
+    email: {
+      type: String,
+      lowercase: true
+    },
+    password: {
+      type: String,
+    }
+  },
+  google: {
+    id: {
+      type: String
+    },
+    email: {
+      type: String,
+      lowercase: true
+    }
+  },
+  facebook: {
+    id: {
+      type: String
+    },
+    email: {
+      type: String,
+      lowercase: true
+    }
   }
 })
 
 // We want to salt&hash the password before the save action takes place
 userSchema.pre('save', async function (next) {
   try {
+    if (this.method !== 'local') {
+      next() // we won't have any password, so just skip this function
+    }
+
     // Generate a salt
     const salt = await bcrypt.genSalt(10)
     // Generate a password has (salt + hash)
-    const passwordHash = await bcrypt.hash(this.password, salt)
+    const passwordHash = await bcrypt.hash(this.local.password, salt)
     // Re-assign hashed version over original, plaintext passord
-    this.password = passwordHash
+    this.local.password = passwordHash
 
     next()
   } catch (error) {
@@ -34,7 +60,7 @@ userSchema.pre('save', async function (next) {
 
 userSchema.methods.isValidPassword = async function (newPassword) {
   try {
-    return await bcrypt.compare(newPassword, this.password)
+    return await bcrypt.compare(newPassword, this.local.password)
   } catch (error) {
     throw new Error(error)
   }
