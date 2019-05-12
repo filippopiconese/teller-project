@@ -14,6 +14,9 @@ router.route('/signup')
 router.route('/signin')
   .post(validateBody(schemas.authSchema), passportSignIn, UserController.signIn)
 
+router.route('/oauth/google')
+  .post(passport.authenticate('googleToken', { session: false }))
+
 router.route('/secret')
   .get(passportJWT, UserController.secret)
 
