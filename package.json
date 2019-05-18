@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-dev": "sudo service mongod start && cross-env NODE_ENV=prod nodemon server/index.js",
-    "test": "sudo service mongod start && cross-env NODE_ENV=test mocha --timeout 5000 __tests__/server/**/*.test.js",
-    "report": "sudo service mongod start && cross-env NODE_ENV=test nyc --reporter=lcov mocha --timeout 5000  __tests__/server/**/*.test.js",
-    "nyc": "sudo service mongod start && cross-env NODE_ENV=test nyc mocha --timeout 5000 __tests__/server/**/*.test.js",
+    "start-dev": "cross-env NODE_ENV=prod nodemon server/index.js",
+    "test": "cross-env NODE_ENV=test mocha --timeout 5000 __tests__/server/**/*.test.js",
+    "report": "cross-env NODE_ENV=test nyc --reporter=lcov mocha --timeout 5000  __tests__/server/**/*.test.js",
+    "nyc": "cross-env NODE_ENV=test nyc mocha --timeout 5000 __tests__/server/**/*.test.js",
     "commit": "git-cz"
   },
   "keywords": [],
@@ -35,6 +35,8 @@
     "multer-gridfs-storage": "^3.2.3",
     "npm": "^6.9.0",
     "passport": "^0.4.0",
+    "passport-facebook-token": "^3.3.0",
+    "passport-google-plus-token": "^2.1.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "rewire": "^4.0.1",

@@ -8,5 +8,7 @@ module.exports = {
   port: process.env.PORT || 3000,
   jwt_secret: process.env.JWT_SECRET,
   googleClientID: process.env.GOOGLE_CLIENT_ID,
-  googleClientSecret: process.env.GOOGLE_CLIENT_SECRET
+  googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  facebookClientID: process.env.FB_CLIENT_ID,
+  facebookClientSecret: process.env.FB_CLIENT_SECRET
 }

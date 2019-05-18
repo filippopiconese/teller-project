@@ -207,7 +207,7 @@ describe('Users controller', () => {
     })
   })
 
-  describe.skip('facebookOAuth', () => {
+  describe('facebookOAuth', () => {
     it('should return token if user passed the passport facebook oauth', async () => {
       sandbox.spy(res, 'json')
       sandbox.spy(res, 'status')

@@ -49,8 +49,13 @@ module.exports = {
 
   googleOAuth: async (req, res, next) => {
     // Generate token
-    console.log('req.user', req.user)
+    const token = signToken(req.user)
 
+    res.status(200).json({ token })
+  },
+
+  facebookOAuth: async (req, res, next) => {
+    // Generate token
     const token = signToken(req.user)
 
     res.status(200).json({ token })
