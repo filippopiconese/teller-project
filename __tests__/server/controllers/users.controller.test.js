@@ -186,7 +186,7 @@ describe('Users controller', () => {
     })
   })
 
-  describe.skip('googleOAuth', () => {
+  describe('googleOAuth', () => {
     it('should return token if user passed the passport google oauth', async () => {
       sandbox.spy(res, 'json')
       sandbox.spy(res, 'status')

@@ -7,6 +7,6 @@ module.exports = {
   testUri: process.env.MONGO_TEST_URI,
   port: process.env.PORT || 3000,
   jwt_secret: process.env.JWT_SECRET,
-  clientID: process.env.CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET
+  googleClientID: process.env.GOOGLE_CLIENT_ID,
+  googleClientSecret: process.env.GOOGLE_CLIENT_SECRET
 }

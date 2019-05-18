@@ -101,7 +101,7 @@ describe('Users route', () => {
       let user = {}
       chai
         .request(server)
-        .get(signin)
+        .post(signin)
         .send(user)
         .end((err, res) => {
           expect(res.status).to.be.equal(400)
@@ -112,7 +112,7 @@ describe('Users route', () => {
     it('should return 200 and our token', done => {
       chai
         .request(server)
-        .get(signin)
+        .post(signin)
         .send(preSave)
         .end((err, res) => {
           expect(res.status).to.be.equal(200)

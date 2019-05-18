@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-dev": "cross-env NODE_ENV=prod nodemon server/index.js",
-    "test": "cross-env NODE_ENV=test mocha --timeout 5000 __tests__/server/**/*.test.js",
-    "report": "cross-env NODE_ENV=test nyc --reporter=lcov mocha --timeout 5000  __tests__/server/**/*.test.js",
-    "nyc": "cross-env NODE_ENV=test nyc mocha --timeout 5000 __tests__/server/**/*.test.js",
+    "start-dev": "sudo service mongod start && cross-env NODE_ENV=prod nodemon server/index.js",
+    "test": "sudo service mongod start && cross-env NODE_ENV=test mocha --timeout 5000 __tests__/server/**/*.test.js",
+    "report": "sudo service mongod start && cross-env NODE_ENV=test nyc --reporter=lcov mocha --timeout 5000  __tests__/server/**/*.test.js",
+    "nyc": "sudo service mongod start && cross-env NODE_ENV=test nyc mocha --timeout 5000 __tests__/server/**/*.test.js",
     "commit": "git-cz"
   },
   "keywords": [],

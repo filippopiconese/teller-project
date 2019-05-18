@@ -4,7 +4,7 @@ const { ExtractJwt } = require('passport-jwt')
 const LocalStrategy = require('passport-local').Strategy
 const GooglePlusTokenStrategy = require("passport-google-plus-token")
 
-const { jwt_secret, clientID, clientSecret } = require('../config')
+const { jwt_secret, googleClientID, googleClientSecret } = require('../config')
 const User = require('./models/user.model')
 
 // JSON WEB TOKENS STRATEGY
@@ -30,8 +30,8 @@ passport.use(new JwtStrategy({
 
 // GOOGLE OAUTH STRATEGY
 passport.use('googleToken', new GooglePlusTokenStrategy({
-  clientID,
-  clientSecret
+  clientID: googleClientID,
+  clientSecret: googleClientSecret
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     console.log('accessToken', accessToken)
