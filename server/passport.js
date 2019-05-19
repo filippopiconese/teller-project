@@ -5,7 +5,7 @@ const LocalStrategy = require('passport-local').Strategy
 const GooglePlusTokenStrategy = require("passport-google-plus-token")
 const FacebookTokenStrategy = require("passport-facebook-token")
 
-const { jwt_secret, googleClientID, googleClientSecret, facebookClientID, facebookClientSecret } = require('../config')
+const { jwt_secret, oauth } = require('./configuration')
 const User = require('./models/user.model')
 
 // JSON WEB TOKENS STRATEGY
@@ -31,8 +31,8 @@ passport.use(new JwtStrategy({
 
 // GOOGLE OAUTH STRATEGY
 passport.use('googleToken', new GooglePlusTokenStrategy({
-  clientID: googleClientID,
-  clientSecret: googleClientSecret
+  clientID: oauth.google.clientID,
+  clientSecret: oauth.google.clientSecret
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     console.log('accessToken', accessToken)
@@ -64,8 +64,8 @@ passport.use('googleToken', new GooglePlusTokenStrategy({
 
 // FACEBOOK OAUTH STRATEGY
 passport.use('facebookToken', new FacebookTokenStrategy({
-  clientID: facebookClientID,
-  clientSecret: facebookClientSecret
+  clientID: oauth.facebook.clientID,
+  clientSecret: oauth.facebook.clientSecret
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     console.log('accessToken', accessToken)

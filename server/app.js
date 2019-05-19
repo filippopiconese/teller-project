@@ -2,7 +2,7 @@ const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-const { testUri, userUri } = require('../config')
+const { testUri, userUri } = require('./configuration')
 
 mongoose.Promise = global.Promise
 if (process.env.NODE_ENV == 'test') {
