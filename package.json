@@ -20,6 +20,7 @@
     "chai-http": "^4.3.0",
     "cross-env": "^5.2.0",
     "ejs": "^2.6.1",
+    "eslint": "^5.16.0",
     "express": "^4.16.4",
     "express-promise-router": "^3.0.3",
     "faker": "^4.1.0",
