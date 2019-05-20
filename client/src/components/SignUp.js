@@ -6,6 +6,8 @@ class SignUp extends Component {
   onSubmit(formData) {
     console.log('onSubmit() called')
     console.log('formData', formData)
+
+
   }
 
   render() {
