@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { AUTH_SIGN_UP } from './types'
+import { AUTH_SIGN_UP, AUTH_ERROR } from './types'
 /*
   ActionCreators -> create/return Actions ({ }) -> dispatched -> middlewares -> reducers
 */
@@ -15,9 +15,10 @@ export const signUp = data => {
 
   return async dispatch => {
     try {
+      console.log('[ActionCreator] signUp called!')
       const res = await axios.post('http://localhost:5000/users/signup', data)
-      console.log('res', res)
 
+      console.log('[ActionCreator] signUp dispatched an action!')
       dispatch({
         type: AUTH_SIGN_UP,
         payload: res.data.token
@@ -25,7 +26,10 @@ export const signUp = data => {
 
       localStorage.setItem('JWT_TOKEN', res.data.token)
     } catch (error) {
-      console.error(error)
+      dispatch({
+        type: AUTH_ERROR,
+        payload: 'Email is already in use'
+      })
     }
   }
 }
