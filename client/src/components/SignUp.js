@@ -3,11 +3,18 @@ import { reduxForm, Field } from 'redux-form'
 
 import CustomInput from './Custominput'
 class SignUp extends Component {
+  onSubmit(formData) {
+    console.log('onSubmit() called')
+    console.log('formData', formData)
+  }
+
   render() {
+    const { handleSubmit } = this.props
+
     return (
       <div className="row">
         <div className="col">
-          <form>
+          <form onSubmit={handleSubmit(this.onSubmit)}>
             <fieldset>
               <Field
                 name="email"
