@@ -11,6 +11,7 @@ class SignUp extends Component {
   constructor(props) {
     super(props)
     this.onSubmit = this.onSubmit.bind(this)
+    this.responseGoogle = this.responseGoogle.bind(this)
   }
 
   async onSubmit(formData) {
@@ -21,8 +22,9 @@ class SignUp extends Component {
     this.props.signUp(formData)
   }
 
-  responseGoogle(res) {
+  async responseGoogle(res) {
     console.log('responseGoogle', res)
+    await this.props.oauthGoogle(res.accessToken)
   }
 
   responseFacebook(res) {
@@ -75,9 +77,19 @@ class SignUp extends Component {
             </div>
             <FacebookLogin
               appId=""
+              autoLoad={true}
+              textButton="Facebook"
+              fields="name,email,picture"
+              callback={this.responseFacebook}
+              cssClass="btn btn-outline-primary"
             />
-            <button className="btn btn-default">Facebook</button>
-            <button className="btn btn-default">Google</button>
+            <GoogleLogin
+              clientId=""
+              buttonText="Google"
+              onSuccess={this.responseGoogle}
+              onFailure={this.responseGoogle}
+              className="btn btn-outline-danger"
+            />
           </div>
         </div>
       </div>
