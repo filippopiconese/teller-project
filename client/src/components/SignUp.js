@@ -19,12 +19,20 @@ class SignUp extends Component {
     console.log('formData', formData)
 
     // We need to call some Action Creator
-    this.props.signUp(formData)
+    await this.props.signUp(formData)
+
+    if (!this.props.errorMessage) {
+      this.props.history.push('dashboard')
+    }
   }
 
   async responseGoogle(res) {
     console.log('responseGoogle', res)
     await this.props.oauthGoogle(res.accessToken)
+
+    if (!this.props.errorMessage) {
+      this.props.history.push('dashboard')
+    }
   }
 
   responseFacebook(res) {
