@@ -5,6 +5,16 @@ import { connect } from 'react-redux'
 import * as actions from '../actions'
 
 class Header extends Component {
+  constructor(props) {
+    super(props)
+    this.signOut = this.signOut.bind(this)
+  }
+
+  signOut() {
+    console.log('signOut got called')
+    this.props.signOut()
+  }
+
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark" style={{ marginBottom: '30px' }}>
@@ -32,7 +42,7 @@ class Header extends Component {
 
             {this.props.isAuth ?
               <li className="nav-item">
-                <Link className="nav-link" to="/signout">Sign Out</Link>
+                <Link className="nav-link" to="/signout" onClick={this.signOut}>Sign Out</Link>
               </li> : null
             }
           </ul>

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { AUTH_SIGN_UP, AUTH_ERROR } from './types'
+import { AUTH_SIGN_UP, AUTH_SIGN_OUT, AUTH_ERROR } from './types'
 /*
   ActionCreators -> create/return Actions ({ }) -> dispatched -> middlewares -> reducers
 */
@@ -62,5 +62,16 @@ export const signUp = data => {
         payload: 'Email is already in use'
       })
     }
+  }
+}
+
+export const signOut = () => {
+  return dispatch => {
+    localStorage.removeItem('JWT_TOKEN')
+
+    dispatch({
+      type: AUTH_SIGN_OUT,
+      payload: ''
+    })
   }
 }
