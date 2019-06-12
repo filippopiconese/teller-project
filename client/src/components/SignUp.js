@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { reduxForm, Field } from 'redux-form'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import GoogleLogin from 'react-google-login'
+import FacebookLogin from 'react-facebook-login'
 
 import * as actions from '../actions'
 import CustomInput from './Custominput'
@@ -17,6 +19,14 @@ class SignUp extends Component {
 
     // We need to call some Action Creator
     this.props.signUp(formData)
+  }
+
+  responseGoogle(res) {
+    console.log('responseGoogle', res)
+  }
+
+  responseFacebook(res) {
+    console.log('responseFacebook', res)
   }
 
   render() {
@@ -47,10 +57,13 @@ class SignUp extends Component {
               />
             </fieldset>
 
-            {this.props.errorMessage ?
-              <div className="alert alert-danger">
-                {this.props.errorMessage}
-              </div> : null}
+            {
+              this.props.errorMessage ?
+                <div className="alert alert-danger">
+                  {this.props.errorMessage}
+                </div>
+                : null
+            }
 
             <button type="submit" className="btn btn-primary">Sign Up</button>
           </form>
@@ -58,8 +71,11 @@ class SignUp extends Component {
         <div className="col">
           <div className="text-center">
             <div className="alert alert-primary">
-              Sin Up
+              Or sign-up using third-party services
             </div>
+            <FacebookLogin
+              appId=""
+            />
             <button className="btn btn-default">Facebook</button>
             <button className="btn btn-default">Google</button>
           </div>
