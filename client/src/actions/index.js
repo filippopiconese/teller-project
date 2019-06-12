@@ -20,6 +20,22 @@ export const oauthGoogle = data => {
   }
 }
 
+export const oauthFacebook = data => {
+  return async dispatch => {
+    const res = await axios.post('http://localhost:5000/users/oauth/facebook', {
+      access_token: data
+    })
+
+    dispatch({
+      type: AUTH_SIGN_UP,
+      payload: res.data.token
+    })
+
+    localStorage.setItem('JWT_TOKEN', res.data.token)
+  }
+}
+
+
 export const signUp = data => {
   /*
     Step 1) Use the form data and make HTTP request to our Back-End and send it along (axios library needed) [X]

@@ -12,6 +12,7 @@ class SignUp extends Component {
     super(props)
     this.onSubmit = this.onSubmit.bind(this)
     this.responseGoogle = this.responseGoogle.bind(this)
+    this.responseFacebook = this.responseFacebook.bind(this)
   }
 
   async onSubmit(formData) {
@@ -35,8 +36,13 @@ class SignUp extends Component {
     }
   }
 
-  responseFacebook(res) {
+  async responseFacebook(res) {
     console.log('responseFacebook', res)
+    await this.props.oauthFacebook(res.accessToken)
+
+    if (!this.props.errorMessage) {
+      this.props.history.push('dashboard')
+    }
   }
 
   render() {
@@ -85,7 +91,6 @@ class SignUp extends Component {
             </div>
             <FacebookLogin
               appId=""
-              autoLoad={true}
               textButton="Facebook"
               fields="name,email,picture"
               callback={this.responseFacebook}
