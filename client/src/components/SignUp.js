@@ -90,14 +90,14 @@ class SignUp extends Component {
               Or sign-up using third-party services
             </div>
             <FacebookLogin
-              appId=""
+              appId="342011239791372"
               textButton="Facebook"
               fields="name,email,picture"
               callback={this.responseFacebook}
               cssClass="btn btn-outline-primary"
             />
             <GoogleLogin
-              clientId=""
+              clientId="36699314176-o4be1skj1rn48ve97uerbomaed1d7meo.apps.googleusercontent.com"
               buttonText="Google"
               onSuccess={this.responseGoogle}
               onFailure={this.responseGoogle}
