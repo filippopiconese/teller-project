@@ -15,6 +15,7 @@ class Dashboard extends Component {
         <br />
         Our secret: <h3>{this.props.secret}</h3>
       </div>
+
     )
   }
 }
