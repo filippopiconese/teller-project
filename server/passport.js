@@ -40,9 +40,22 @@ passport.use('googleToken', new GooglePlusTokenStrategy({
     console.log('profile', profile)
 
     // Check whether this current user exists in our DB
-    const existingUser = await User.findOne({ "google.id": profile.id })
+    let existingUser = await User.findOne({ "google.id": profile.id })
     if (existingUser) {
       console.log('User already exists in our DB')
+      return done(null, existingUser)
+    }
+
+    // Check if we have someone with the same email
+    existingUser = await User.findOne({ "local.email": profile.emails[0].value })
+    if (existingUser) {
+      // We want to merge google's data with local auth
+      existingUser.google = {
+        id: profile.id,
+        email: profile.emails[0].value
+      }
+
+      await existingUser.save()
       return done(null, existingUser)
     }
 
@@ -73,8 +86,21 @@ passport.use('facebookToken', new FacebookTokenStrategy({
     console.log('profile', profile)
 
     // Check whether this current user exists in our DB
-    const existingUser = await User.findOne({ "facebook.id": profile.id })
+    let existingUser = await User.findOne({ "facebook.id": profile.id })
     if (existingUser) {
+      return done(null, existingUser)
+    }
+
+    // Check if we have someone with the same email
+    existingUser = await User.findOne({ "local.email": profile.emails[0].value })
+    if (existingUser) {
+      // We want to merge facebook's data with local auth
+      existingUser.facebook = {
+        id: profile.id,
+        email: profile.emails[0].value
+      }
+
+      await existingUser.save()
       return done(null, existingUser)
     }
 
