@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { AUTH_SIGN_UP, AUTH_SIGN_OUT, AUTH_ERROR } from './types'
+import { AUTH_SIGN_UP, AUTH_SIGN_OUT, AUTH_SIGN_IN, AUTH_ERROR } from './types'
 /*
   ActionCreators -> create/return Actions ({ }) -> dispatched -> middlewares -> reducers
 */
@@ -60,6 +60,28 @@ export const signUp = data => {
       dispatch({
         type: AUTH_ERROR,
         payload: 'Email is already in use'
+      })
+    }
+  }
+}
+
+export const signIn = data => {
+  return async dispatch => {
+    try {
+      console.log('[ActionCreator] signIn called!')
+      const res = await axios.post('http://localhost:5000/users/signin', data)
+
+      console.log('[ActionCreator] signIn dispatched an action!')
+      dispatch({
+        type: AUTH_SIGN_IN,
+        payload: res.data.token
+      })
+
+      localStorage.setItem('JWT_TOKEN', res.data.token)
+    } catch (error) {
+      dispatch({
+        type: AUTH_ERROR,
+        payload: 'Email and password combination is not valid!'
       })
     }
   }
