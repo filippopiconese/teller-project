@@ -1,6 +1,12 @@
 import axios from 'axios'
 
-import { AUTH_SIGN_UP, AUTH_SIGN_OUT, AUTH_SIGN_IN, AUTH_ERROR } from './types'
+import {
+  AUTH_SIGN_UP,
+  AUTH_SIGN_OUT,
+  AUTH_SIGN_IN,
+  AUTH_ERROR,
+  DASHBOARD_GET_DATA
+} from './types'
 /*
   ActionCreators -> create/return Actions ({ }) -> dispatched -> middlewares -> reducers
 */
@@ -17,6 +23,7 @@ export const oauthGoogle = data => {
     })
 
     localStorage.setItem('JWT_TOKEN', res.data.token)
+    axios.defaults.headers.common['Authorization'] = res.data.token
   }
 }
 
@@ -32,6 +39,7 @@ export const oauthFacebook = data => {
     })
 
     localStorage.setItem('JWT_TOKEN', res.data.token)
+    axios.defaults.headers.common['Authorization'] = res.data.token
   }
 }
 
@@ -56,11 +64,29 @@ export const signUp = data => {
       })
 
       localStorage.setItem('JWT_TOKEN', res.data.token)
+      axios.defaults.headers.common['Authorization'] = res.data.token
     } catch (error) {
       dispatch({
         type: AUTH_ERROR,
         payload: 'Email is already in use'
       })
+    }
+  }
+}
+
+export const getSecret = () => {
+  return async dispatch => {
+    try {
+      console.log('[ActionCreator] Trying to get back-end secret')
+      const res = await axios.get('http://localhost:5000/users/secret')
+      console.log('res', res)
+
+      dispatch({
+        type: DASHBOARD_GET_DATA,
+        payload: res.data.secret
+      })
+    } catch (error) {
+      console.error('error', error)
     }
   }
 }
@@ -78,6 +104,7 @@ export const signIn = data => {
       })
 
       localStorage.setItem('JWT_TOKEN', res.data.token)
+      axios.defaults.headers.common['Authorization'] = res.data.token
     } catch (error) {
       dispatch({
         type: AUTH_ERROR,
@@ -90,6 +117,7 @@ export const signIn = data => {
 export const signOut = () => {
   return dispatch => {
     localStorage.removeItem('JWT_TOKEN')
+    axios.defaults.headers.common['Authorization'] = ''
 
     dispatch({
       type: AUTH_SIGN_OUT,

@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import reduxThunk from 'redux-thunk'
+import axios from 'axios'
 
 import * as serviceWorker from './serviceWorker'
 import App from './components/App'
@@ -15,6 +16,7 @@ import reducers from './reducers'
 import authGuard from './components/HOCs/authGuard'
 
 const jwtToken = localStorage.getItem('JWT_TOKEN')
+axios.defaults.headers.common['Authorization'] = jwtToken
 
 ReactDOM.render(
   <Provider store={createStore(reducers, {

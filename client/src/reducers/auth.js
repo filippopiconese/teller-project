@@ -1,4 +1,9 @@
-import { AUTH_SIGN_UP, AUTH_SIGN_OUT, AUTH_SIGN_IN, AUTH_ERROR } from '../actions/types'
+import {
+  AUTH_SIGN_UP,
+  AUTH_SIGN_OUT,
+  AUTH_SIGN_IN,
+  AUTH_ERROR
+} from '../actions/types'
 
 const DEFAULT_STATE = {
   isAuthenticated: false,
