@@ -34,7 +34,7 @@ describe('Users controller', () => {
   }
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox()
+    sandbox = sinon.sandbox.create()
   })
 
   afterEach(() => {
@@ -50,11 +50,11 @@ describe('Users controller', () => {
         await userController.secret(req, res)
 
         expect(console.log).to.have.been.called
-        // expect(
-        //   res.json.calledWith({
-        //     secret: 'Resource',
-        //   }),
-        // ).to.be.ok
+        expect(
+          res.json.calledWith({
+            secret: 'Resource',
+          }),
+        ).to.be.ok
         expect(res.json).to.have.been.calledWith({
           secret: 'Resource',
         })

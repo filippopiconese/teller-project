@@ -23,103 +23,100 @@ describe('Users route', () => {
     password: faker.internet.password()
   }
 
-  before(done => {
-    chai
+  before(async () => {
+    const res = await chai
       .request(server)
       .post(signup)
       .send(preSave)
-      .end((err, res) => {
-        expect(res.status).to.equal(200)
-        token = res.body.token
-        done()
-      })
+    expect(res.status).to.equal(200)
+    token = res.body.token
   })
 
-  after('dropping test db', done => {
-    mongoose.connection.dropDatabase(() => {
+  after('dropping test db', async () => {
+    await mongoose.connection.dropDatabase(() => {
       console.log('\n Test database dropped')
     })
-    mongoose.connection.close(() => {
-      done()
-    })
+    await mongoose.connection.close()
   })
 
   describe('signup', () => {
-    it('should create new user if email not found', done => {
-      chai
-        .request(server)
-        .post(signup)
-        .send(user)
-        .end((err, res) => {
-          expect(res.status).to.equal(200)
-          expect(res.body).not.to.be.empty
-          expect(res.body).to.have.property('token')
-          done()
-        })
+    it('should create new user if email not found', async () => {
+      try {
+        const res = await chai
+          .request(server)
+          .post(signup)
+          .send(user)
+        expect(res.status).to.equal(200)
+        expect(res.body).not.to.be.empty
+        expect(res.body).to.have.property('token')
+      } catch (err) {
+        console.error(err)
+      }
     })
 
-    it('should return 403 if email was found', done => {
-      chai
-        .request(server)
-        .post(signup)
-        .send(preSave)
-        .end((err, res) => {
-          expect(res.status).to.equal(403)
-          expect(res.body).to.be.deep.equal({ error: 'Email is already in use' })
-          done()
-        })
+    it('should return 403 if email was found', async () => {
+      try {
+        await chai
+          .request(server)
+          .post(signup)
+          .send(preSave)
+      } catch (err) {
+        expect(err.status).to.equal(403)
+        expect(err.response.text).to.equal('{"error":"Email is already in use"}')
+      }
     })
   })
 
   describe('secret', () => {
-    it('should return status 401', done => {
-      chai
-        .request(server)
-        .get(secret)
-        .end((err, res) => {
-          expect(res.status).to.equal(401)
-          expect(res.body).to.be.empty
-          done()
-        })
+    it('should return status 401', async () => {
+      try {
+        await chai.request(server).get(secret)
+      } catch (err) {
+        expect(err.status).to.equal(401)
+        expect(err.response.text).to.equal('Unauthorized')
+      }
     })
 
-    it('should return status 200', done => {
-      chai
-        .request(server)
-        .get(secret)
-        .set('Authorization', token)
-        .end((err, res) => {
-          expect(res.status).to.equal(200)
-          expect(res.body).to.be.deep.equal({ secret: 'Resource' })
-          done()
-        })
+    it('should return status 200', async () => {
+      try {
+        const res = await chai
+          .request(server)
+          .get(secret)
+          .set('Authorization', token)
+        expect(res.status).to.equal(200)
+        expect(res.body).to.deep.equal({ secret: 'Resource' })
+      } catch (err) {
+        throw new Error(err)
+      }
     })
   })
 
   describe('signin', () => {
-    it('should return error 400 if user email and password empty', done => {
+    it('should return error 400 if user email and password empty', async () => {
       let user = {}
-      chai
-        .request(server)
-        .post(signin)
-        .send(user)
-        .end((err, res) => {
-          expect(res.status).to.be.equal(400)
-          done()
-        })
+      try {
+        const res = await chai
+          .request(server)
+          .post(signin)
+          .send(user)
+      } catch (err) {
+        expect(err.status).to.be.equal(400)
+      }
     })
 
-    it('should return 200 and our token', done => {
-      chai
-        .request(server)
-        .post(signin)
-        .send(preSave)
-        .end((err, res) => {
-          expect(res.status).to.be.equal(200)
-          expect(res.body).not.to.be.empty
-          expect(res.body).to.have.property('token')
-          done()
-        })
+    it('should return 200 and our token', async () => {
+      try {
+        const res = await chai
+          .request(server)
+          .post(signin)
+          .send(preSave)
+
+        expect(res.status).to.be.equal(200)
+        expect(res.body).not.to.be.empty
+        expect(res.body).to.have.property('token')
+      } catch (err) {
+        throw new Error(err)
+      }
     })
   })
 })
