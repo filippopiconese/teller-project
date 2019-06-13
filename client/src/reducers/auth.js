@@ -20,6 +20,7 @@ export default (state = DEFAULT_STATE, action) => {
       console.log('[AuthReducer] got an AUTH_SIGN_IN action!')
       return { ...state, token: action.payload, isAuthenticated: true, errorMessage: '' }
     case AUTH_SIGN_OUT:
+      console.log('[AuthReducer] got an AUTH_SIGN_OUT action!')
       return { ...state, token: action.payload, isAuthenticated: false, errorMessage: '' }
     case AUTH_ERROR:
       console.log('[AuthReducer] got an AUTH_ERROR action!')

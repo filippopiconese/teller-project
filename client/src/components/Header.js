@@ -42,7 +42,7 @@ class Header extends Component {
 
             {this.props.isAuth ?
               <li className="nav-item">
-                <Link className="nav-link" to="/signout" onClick={this.signOut}>Sign Out</Link>
+                <Link className="nav-link" to="/" onClick={this.signOut}>Sign Out</Link>
               </li> : null
             }
           </ul>
