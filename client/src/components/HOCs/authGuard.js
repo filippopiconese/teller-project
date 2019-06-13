@@ -4,28 +4,23 @@ import { connect } from 'react-redux'
 export default (OriginalComponent) => {
   class MixedComponent extends Component {
 
-    componentDidMount() {
-      // Whether the user is authenticated
-      if (this.props.isAuth && this.props.jwtToken) {
-        console.log('All is good, user\'s entrance is allowed')
-      } else {
-        console.log('User is not authenticated, decline access')
+    checkAuth() {
+      if (!this.props.isAuth || !this.props.jwtToken) {
         this.props.history.push('/')
       }
+    }
+    componentDidMount() {
+      // Whether the user is authenticated
+      this.checkAuth()
     }
 
     componentDidUpdate() {
       // Whether the user is authenticated
-      if (this.props.isAuth && this.props.jwtToken) {
-        console.log('All is good, user\'s entrance is allowed')
-      } else {
-        console.log('User is not authenticated, decline access')
-        this.props.history.push('/')
-      }
+      this.checkAuth()
     }
 
     render() {
-      return <OriginalComponent />
+      return <OriginalComponent {...this.props} />
     }
   }
 
